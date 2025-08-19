@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <title>Your Name – Portfolio</title>
+  <meta name="description" content="Personal portfolio of Your Name · Data Science & Full‑Stack projects, experience, and contact details." />
+  <meta property="og:title" content="Your Name – Portfolio" />
+  <meta property="og:description" content="Data Science & Full‑Stack projects, experience, and contact details." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;            
+      --bg-soft: #0f1629;        
+      --text: #e6edf3;          
+      --muted: #98a2b3;         
+      --brand: #0ea5e9;        
+      --brand-2: #a855f7;       
+      --accent: #22c55e;        
+      --shadow: 0 10px 30px rgba(2,6,23,.35);
+      --radius: 16px;
+      --nav-h: 64px;
+      --nav-bg: linear-gradient(180deg, rgba(11,16,32,.9), rgba(11,16,32,.65));
+      --nav-border: rgba(255,255,255,.06);
+      --nav-drawer-bg: rgba(11,16,32,.95);
+    }
+    @media (prefers-color-scheme: light) { 
+      :root { --bg:#ecfdf5; --bg-soft:#ffffff; --text:#0b1020; --muted:#475569; --shadow:0 10px 30px rgba(15,23,42,.1); --nav-bg: linear-gradient(180deg, rgba(236,253,245,.88), rgba(236,253,245,.7)); --nav-border: rgba(2,6,23,.08); --nav-drawer-bg: rgba(236,253,245,.98);}  
+    }
+    /* Dark mode toggled by class */
+    .dark {
+      --bg: #0b1020; --bg-soft:#0f1629; --text:#e6edf3; --muted:#98a2b3; --shadow:0 10px 30px rgba(2,6,23,.35);
+    }
+
+    * { box-sizing: border-box }
+    html,body { height:100% }
+    body {
+      margin:0; font-family: 'Times New Roman', Times, serif;font-size: large;
+      color:var(--text); background:radial-gradient(1200px 600px at 80% -10%, rgba(16,185,129,.20), transparent 60%),
+                         radial-gradient(1000px 500px at -10% 10%, rgba(34,197,94,.18), transparent 60%), var(--bg);
+      line-height:1.6; letter-spacing:.2px; scroll-behavior:smooth; padding-top: var(--nav-h);
+    }
+    a { color:inherit; text-decoration:none }
+    img { max-width:100%; display:block }
+    .container { width:min(1100px, 92%); margin-inline:auto }
+    .grid { display:grid; gap:1.25rem }
+    .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.1rem; border-radius:999px; font-weight:600; border:1px solid #334155; background:linear-gradient(180deg, rgba(14,165,233,.15), rgba(14,165,233,.08)); transition: transform .25s ease, box-shadow .25s ease, background .35s ease; box-shadow: var(--shadow) }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 20px 35px rgba(2,6,23,.45); }
+    .btn--ghost { background: transparent; border-color:#809bc2 }
+    .btn--accent { background:linear-gradient(135deg, var(--brand), var(--brand-2)); border:0 }
+    .tag { padding:.35rem .7rem; border:1px solid #334155; border-radius:999px; font-size:.82rem; color:var(--muted) }
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); backdrop-filter: blur(8px); border-radius: var(--radius); box-shadow: var(--shadow) }
+    .section { padding: clamp(48px, 8vw, 96px) 0; scroll-margin-top: var(--nav-h) }
+    .section h2 { font-size: clamp(1.4rem, 1rem + 2vw, 2.2rem); line-height:1.15; margin:0 0 .75rem; letter-spacing:.3px }
+    .section p.lead { color:var(--muted); margin:0 0 2rem }
+
+    /* Navbar */
+    .nav { position:fixed; top:0; left:0; right:0; z-index:999; backdrop-filter: blur(12px); background: var(--nav-bg); border-bottom:1px solid var(--nav-border) }
+    .nav .inner { display:flex; align-items:center; justify-content:space-between; padding:.85rem 0 }
+    .brand { display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.4px }
+    .brand .spark { width:10px; height:10px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #fff, var(--brand)); box-shadow:0 0 22px rgba(14,165,233,.9) }
+    .nav-links { display:flex; gap:.5rem; align-items:center; }
+    .nav-links a { color: #060e01da; font-weight:600; border:1px solid transparent; transition: background .25s ease, color .25s ease, transform .2s }
+    .nav-links a:hover, .nav-links a.active { color:var(--text); background:rgba(160, 177, 141, 0.842); border-color:rgba(255,255,255,.08) }
+    .nav-toggle { display:none; color:var(--text) }
+
+    /* Hero */
+    .hero { display:grid; grid-template-columns: 1.2fr .8fr; gap:2rem; align-items:center; min-height: 72vh }
+    .hero h1 { font-size: clamp(2rem, 2.2vw + 1.8rem, 3rem); margin:0 0 .8rem; line-height:1.05 }
+    .headline-gradient { background: linear-gradient(135deg, #70ad4c 0%, #5c9b32 30%, #5e971c 60%, #87bb27 100%); -webkit-background-clip:text; background-clip:text; color:transparent }
+    .role { display:inline-block; font-weight:800 }
+    .hero .cta { display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1.2rem }
+    .hero-visual { position:relative }
+    .orbital { position:absolute; inset:-20px; pointer-events:none; filter: blur(25px); opacity:.9; background:
+      radial-gradient(160px 160px at 20% 20%, rgba(14,165,233,.6), transparent 60%),
+      radial-gradient(180px 180px at 80% 35%, rgba(168,85,247,.55), transparent 60%),
+      radial-gradient(200px 200px at 40% 80%, rgba(34,197,94,.45), transparent 60%);
+      animation: float 14s ease-in-out infinite alternate }
+    .card-tilt { perspective: 1000px }
+    .profile-card { transform-style:preserve-3d; transform: rotateX(0) rotateY(0); transition: transform .18s ease-out; padding:1rem; border-radius: var(--radius) }
+    .profile { border-radius: 18px; aspect-ratio:1/1; width:min(360px, 100%); background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.1); box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; overflow:hidden }
+    .profile svg { width:60%; height:60%; opacity:.9 }
+
+    /* Sections */
+    .cards { grid-template-columns: repeat(12, 1fr) }
+    .card { grid-column: span 6; padding:1.1rem; border-radius: var(--radius); border:1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 25px 60px rgba(2,6,23,.45); border-color: rgba(255,255,255,.2) }
+
+    /* Projects */
+    .projects { grid-template-columns: repeat(12, 1fr) }
+    .project { position:relative; grid-column: span 6; overflow:hidden; border-radius:18px; border:1px solid rgba(255,255,255,.08); background: #0b1327; min-height: 260px }
+    .project .img { position:absolute; inset:0; background: radial-gradient(80% 100% at 0% 0%, rgba(14,165,233,.22), transparent 70%),
+                                          radial-gradient(100% 100% at 100% 0%, rgba(168,85,247,.22), transparent 70%),
+                                          linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+                    transition: transform .45s ease }
+    .project:hover .img { transform: scale(1.06) }
+    .project .content { position:absolute; inset:0; padding:1.1rem; display:flex; flex-direction:column; justify-content:flex-end; gap:.6rem; background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,.45) 70%); }
+    .project h3 { margin:0; font-size:1.15rem }
+    .project .meta { display:flex; gap:.5rem; flex-wrap:wrap }
+    .project .overlay { position:absolute; inset:0; display:grid; place-items:center; transform: translateY(105%); transition: transform .35s ease; background: rgba(2,6,23,.7); backdrop-filter: blur(6px) }
+    .project:hover .overlay { transform: translateY(0) }
+    .overlay .actions { display:flex; gap:.6rem }
+
+    /* Timeline */
+    .timeline { position:relative; margin: 1rem 0 0 0 }
+    .timeline::before { content:""; position:absolute; left:10px; top:0; bottom:0; width:2px; background: linear-gradient(var(--brand), var(--brand-2)) }
+    .timeline .item { position:relative; margin:0 0 1.2rem 2rem; padding: .8rem 1rem; border-radius: 12px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03) }
+    .timeline .item::before { content:""; position:absolute; left:-18px; top:14px; width:12px; height:12px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #fff, var(--brand)) }
+
+    /* Skills */
+    .skills { display:flex; flex-wrap:wrap; gap:.6rem }
+    .skill { position:relative }
+    .skill .tip { position:absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background:#0b1327; color:#e6edf3; padding:.35rem .5rem; font-size:.75rem; border-radius:8px; border:1px solid rgba(255,255,255,.08); opacity:0; pointer-events:none; transition: opacity .2s }
+    .skill:hover .tip { opacity:1 }
+
+    /* Contact */
+    .contact-card { display:grid; grid-template-columns: 1fr 1fr; gap:1rem; align-items:start }
+    .input { width:100%; padding:.9rem 1rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; color:var(--text) }
+    .input:focus { outline:2px solid rgba(14,165,233,.5) }
+
+    /* Footer */
+    footer { padding: 2rem 0; color:var(--muted); border-top:1px solid rgba(255,255,255,.06) }
+
+    /* Utilities */
+    .row { display:flex; gap:.6rem; flex-wrap:wrap }
+    .center { text-align:center }
+    .muted { color:var(--muted) }
+    .hide { display:none }
+    .reveal { opacity:0; transform: translateY(12px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1) }
+    .reveal.is-inview { opacity:1; transform:none }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap:2rem; min-height: auto }
+      .contact-card { grid-template-columns: 1fr }
+      .project, .card { grid-column: span 12 }
+      .nav-links { display:none }
+      .nav-toggle { display:inline-flex; gap:.5rem; align-items:center; padding:.5rem .75rem; border:1px solid rgba(255,255,255,.08); border-radius:10px }
+      .nav.open .nav-links { position:absolute; left:0; right:0; top:56px; background:var(--nav-drawer-bg); display:flex; flex-direction:column; padding:.6rem; border-bottom:1px solid rgba(255,255,255,.06) }
+    }
+
+    /* Keyframes */
+    @keyframes float { from{ transform: translateY(0) } to { transform: translateY(16px) } }
+    @keyframes caret { 50% { opacity:0 } }
+    .caret { display:inline-block; width:1ch; animation: caret 1s steps(1) infinite }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation:none !important; transition:none !important }
+    }
+    .back-to-top {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #2191a5, #0077FF); /* green → blue */
+  border: none;
+  border-radius: 25px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  
+  /* Transition for smooth hover effect */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.back-to-top:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Active (when clicked) */
+.back-to-top:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+  </style>
+</head>
+<body>
+  <header class="nav" id="top">
+    <div class="container inner">
+      <a class="brand" href="#top" aria-label="Home">
+        <span class="spark" aria-hidden="true"></span>
+        <span style="color: black;">Nithianandan&nbsp;Yathursan</span>
+      </a>
+      <nav aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu ▾</button>
+        <div id="menu" class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+          <button id="themeToggle" class="btn btn--ghost" aria-pressed="false" title="Toggle theme">🌙</button>
+          <a class="btn btn--accent" href="https://github.com/NithiYathursan" target="_blank" rel="noopener" style="color: rgb(6, 26, 44);">GitHub</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="section container hero">
+      <div>
+        <p class="tag reveal">OPEN TO INTERNSHIPS · REMOTE / SRI LANKA</p>
+        <h1 class="reveal">Hi, I’m <span class="headline-gradient">Yathursan</span> — a <span class="role" id="role">Data Science Student</span><span class="caret">▌</span></h1>
+        <p class="lead reveal">I build clean, accessible products with a focus on data‑driven features. I love Python, FastAPI, SQL, and turning messy datasets into useful apps.</p>
+        <div class="cta reveal">
+          <a class="btn btn--accent" href="#projects">See Projects</a>
+          <a class="btn btn--ghost" href="https://mail.google.com/mail/?view=cm&fs=1&to=nithiyathursan123@gmail.com&su=Hello%20Yathursan&body=Hi%20Yathursan%2C%0D%0AI%20saw%20your%20portfolio%20and%20would%20like%20to%20connect."
+   target="_blank" rel="noopener">Email Me</a>
+          
+        </div>
+        <div class="row" style="margin-top:1rem">
+          <a class="tag" href="https://www.linkedin.com/in/nithianandan-yathursan-841470379/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a class="tag" href="https://github.com/NithiYathursan" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+         
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orbital" aria-hidden="true"></div>
+        <div class="card-tilt reveal">
+          <div class="profile profile-card" id="tilt">
+            
+<img src="NY_photo.jpg" alt="My Profile Photo"
+     style="width:260px; height:285px; object-fit:cover; border-radius:50%; border:4px solid #22d3ee; box-shadow:0 4px 20px rgba(0,0,0,0.4);" />
+
+              <defs>
+                <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+              </defs>
+              <circle cx="100" cy="100" r="90" fill="url(#g)" opacity=".18"/>
+              <circle cx="100" cy="86" r="40" fill="#e6edf3"/>
+              <rect x="50" y="120" width="100" height="40" rx="20" fill="#e6edf3"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="reveal">About</h2>
+        <p class="lead reveal">Second‑year Data Science undergraduate at Sabaragamuwa University of Sri Lanka. I enjoy full‑stack development, clean UI with micro‑interactions.</p>
+        <div class="grid cards">
+          <div class="card reveal">
+            <h3>What I do</h3>
+            <p class="muted">Python · FastAPI · SQL · Tailwind · JS · Git/GitHub</p>
+            <div class="skills" aria-label="Skills">
+              <span class="skill tag">Python<span class="tip">3+ years</span></span>
+              <span class="skill tag">FastAPI<span class="tip">APIs & auth</span></span>
+              <span class="skill tag">MySQL<span class="tip">Joins, indexes</span></span>
+              
+              <span class="skill tag">HTML/CSS/JS<span class="tip">Responsive UI</span></span>
+              <span class="skill tag">Git<span class="tip">Team workflow</span></span>
+            </div>
+          </div>
+          <div class="card reveal">
+            <h3>Highlights</h3>
+            <ul>
+              <li>🏦 Built a Loan Eligibility Prediction system using Machine Learning</li>
+              <li>📊 Designed an admin dashboard with filters and CSV export.</li>
+              <li>⚡ Interested in data pipelines & ML‑powered UX.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="reveal">Featured Projects</h2>
+        <p class="lead reveal">Work that best represents my skills. Hover to preview actions.</p>
+        <div class="grid projects">
+          <!-- Project card -->
+          <article class="project reveal" aria-labelledby="p1-title">
+            <div class="img" aria-hidden="true"></div>
+            <div class="content">
+              <h3 id="p1-title" style="color: #e6edf3;">Loan Eligibility Prediction</h3>
+              <div class="meta">
+                <span class="tag" style="color: aliceblue;">FastAPI</span>
+                <span class="tag" style="color: aliceblue;">RandomForest</span>
+                <span class="tag" style="color: aliceblue;">HTML/CSS/BootStrap</span>
+              </div>
+            </div>
+            <div class="overlay" aria-hidden="true">
+              <div class="actions">
+                
+                <a class="btn btn--ghost" href="https://github.com/NithiYathursan/Loan-eligibility-prediction-system.git" target="_blank" rel="noopener" style="color: aliceblue;">Code</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal" aria-labelledby="p2-title">
+            <div class="img" aria-hidden="true"></div>
+            <div class="content">
+              <h3 id="p2-title" style="color: #e6edf3;">Emergency Contact Management System</h3>
+              <div class="meta">
+                <span class="tag" style="color: aliceblue;">Python</span>
+               
+              </div>
+            </div>
+            <div class="overlay" aria-hidden="true">
+              <div class="actions">
+                
+                <a class="btn btn--ghost" href="https://github.com/NithiYathursan/Emergency_Contact_Management_python.git" target="_blank" rel="noopener" style="color: aliceblue;">Code</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal" aria-labelledby="p3-title">
+            <div class="img" aria-hidden="true"></div>
+            <div class="content">
+              <h3 id="p3-title" style="color: #e6edf3;">My GitHub Portfolio</h3>
+              <div class="meta">
+                <span class="tag" style="color: aliceblue;">HTML</span>
+                <span class="tag" style="color: aliceblue;">CSS</span>
+                <span class="tag" style="color: aliceblue;">JS</span>
+              </div>
+            </div>
+            <div class="overlay" aria-hidden="true">
+              <div class="actions">
+                <a class="btn btn--ghost" href="https://github.com/NithiYathursan/yathu-portfolio.git" target="_blank" rel="noopener" style="color: aliceblue;">Code</a>
+              </div>
+            </div>
+          </article>
+
+    
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section">
+      <div class="container">
+        <h2 class="reveal">Experience & Education</h2>
+        <div class="timeline">
+          <div class="item reveal">
+            <strong>Undergraduate Education</strong>
+            <div class="muted">BSc (Hons) in Data Science – Sabaragamuwa University of Sri Lanka (2024 – Present)</div>
+            <p>Studying algorithms, databases, machine learning, and operating systems.</p>
+          </div>
+          <div class="item reveal">
+            <strong>Responsive Web Development</strong>
+            <div class="muted">2023-2024 - University of Jaffna</div>
+            <p>Learned HTML, CSS, JS, and Bootstrap to build responsive web applications.</p>
+          </div>
+          <div class="item reveal">
+            <strong>Diploma in English and ICT </strong>
+            <div class="muted">2020–2021 - IPS Campus</div>
+            <p>Completed a diploma program covering English language skills and basic ICT concepts.</p>
+        </div>
+        <div class="item reveal">
+            <strong>Diploma in Sinhala </strong>
+            <div class="muted">2020–2021 - SKY Academy </div>
+            <p>Completed a diploma program covering Sinhala language skills.</p>
+        </div>
+        <div class="item reveal">
+            <strong>High School</strong>
+            <div class="muted">G.C.E. Advanced Level – Jaffna Hindu College (2019)</div>
+            <p>Specialized in Mathematics, Physics, and ICT.</p>    
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="reveal">Contact</h2>
+        <p class="lead reveal">Have an opportunity or feedback? Let’s talk.</p>
+        <div class="glass contact-card reveal">
+          <form action="https://formspree.io/f/xpwlerea" method="POST" class="grid" style="gap:.8rem">
+            <input class="input" type="text" name="name" placeholder="Your name" style="font-family: 'Times New Roman', Times, serif;" required />
+            <input class="input" type="email" name="email" placeholder="Your email" style="font-family: 'Times New Roman', Times, serif;" required />
+            <textarea class="input" name="message" placeholder="Your message" rows="6" style="font-family: 'Times New Roman', Times, serif;" required></textarea>
+            <button class="btn btn--accent" type="submit" style="font-family: 'Times New Roman', Times, serif;">Send Message</button>
+          </form>
+          <div>
+            <div class="glass" style="padding:1rem">
+              <h3 style="margin-top:0">Elsewhere</h3>
+              <p class="muted">Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nithiyathursan123@gmail.com&su=Hello%20Yathursan&body=Hi%20Yathursan%2C%0D%0AI%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.">nithiyathursan123@gmail.com</a></p>
+              <p class="muted">LinkedIn: <a href="https://www.linkedin.com/in/nithianandan-yathursan-841470379/" target="_blank" rel="noopener">Nithianandan Yathursan</a></p>
+              <p class="muted">GitHub: <a href="https://github.com/NithiYathursan" target="_blank" rel="noopener">@NithiYathursan</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container center">
+    <div>© <span id="year"></span> Nithianandan Yathursan. Built with ❤. 
+    <a class="back-to-top" href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    ↑ Back to top
+    </a>
+
+  </footer>
+
+  <script>
+    // ——— Theme toggle (respects prefers-color-scheme, stores choice) ———
+    (function() {
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const set = (mode) => {
+        if (mode === 'dark') document.body.classList.add('dark');
+        else document.body.classList.remove('dark');
+        localStorage.setItem('theme', mode);
+        if (btn) btn.setAttribute('aria-pressed', String(mode === 'dark'));
+      }
+      const stored = localStorage.getItem('theme');
+      if (stored) set(stored); else if (matchMedia('(prefers-color-scheme: dark)').matches) set('dark');
+      btn?.addEventListener('click', () => set(document.body.classList.contains('dark') ? 'light' : 'dark'));
+    })();
+
+    // ——— Mobile nav toggle ———
+    (function(){
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('.nav');
+      const menu = document.getElementById('menu');
+      toggle?.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+        if (open) menu.querySelector('a')?.focus();
+      });
+    })();
+
+    // ——— Typewriter role titles ———
+    (function(){
+      const el = document.getElementById('role');
+      if (!el) return;
+      const words = ['Data Science Student','FastAPI Developer','ML Enthusiast','Open‑Source Contributor'];
+      let i = 0, j = 0, del = false;
+      function tick(){
+        const w = words[i];
+        if(!del){ j++; el.textContent = w.slice(0,j); if(j === w.length){ del = true; setTimeout(tick, 1200); return; } }
+        else { j--; el.textContent = w.slice(0,j); if(j === 0){ del = false; i = (i+1)%words.length; } }
+        const speed = del ? 35 : 70; setTimeout(tick, speed);
+      }
+      tick();
+    })();
+
+    // ——— Intersection Observer reveal on scroll ———
+    (function(){
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-inview'); io.unobserve(e.target);} });
+      }, { threshold:.18 });
+      els.forEach(el=> io.observe(el));
+    })();
+
+    // ——— Tilt effect for profile card ———
+    (function(){
+      const card = document.getElementById('tilt');
+      if(!card) return;
+      const rect = () => card.getBoundingClientRect();
+      card.addEventListener('mousemove', (e)=>{
+        const r = rect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (y - .5) * -10; // rotateX
+        const ry = (x - .5) * 10;  // rotateY
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      card.addEventListener('mouseleave', ()=>{ card.style.transform = 'rotateX(0) rotateY(0)' });
+    })();
+
+    // ——— Scroll spy (highlight active nav link) ———
+    (function(){
+      const links = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+      const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      const spy = () => {
+        let idx = sections.findIndex(s => s.getBoundingClientRect().top - 100 > 0);
+        if (idx === -1) idx = sections.length - 1; else idx = Math.max(0, idx - 1);
+        links.forEach(l=>l.classList.remove('active')); links[idx]?.classList.add('active');
+      }
+      document.addEventListener('scroll', spy, { passive:true }); spy();
+    })();
+
+    // ——— Year ———
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
