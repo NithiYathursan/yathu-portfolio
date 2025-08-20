@@ -66,7 +66,7 @@
     .brand .spark { width:10px; height:10px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #fff, var(--brand)); box-shadow:0 0 22px rgba(14,165,233,.9) }
     .nav-links { display:flex; gap:.5rem; align-items:center; }
     .nav-links a { color: #060e01da; font-weight:600; border:1px solid transparent; transition: background .25s ease, color .25s ease, transform .2s }
-    .nav-links a:hover, .nav-links a.active { color:var(--text); background:rgba(160, 177, 141, 0.842); border-color:rgba(255,255,255,.08) }
+    .nav-links a:hover, .nav-links a.active { color:var(--text); background:rgba(126, 151, 97, 0.842); border-color:rgba(255,255,255,.08) }
     .nav-toggle { display:none; color:var(--text) }
 
     /* Hero */
@@ -181,6 +181,17 @@
   transform: translateY(0) scale(0.97);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
+.laptop-icon {
+  font-size: 22px;         /* adjust size */
+  display: inline-block;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.2; }
+}
+
 
   </style>
 </head>
@@ -188,11 +199,12 @@
   <header class="nav" id="top">
     <div class="container inner">
       <a class="brand" href="#top" aria-label="Home">
-        <span class="spark" aria-hidden="true"></span>
+        
+        <span class="laptop-icon" aria-hidden="true">💻</span>
         <span style="color: black;">Nithianandan&nbsp;Yathursan</span>
       </a>
       <nav aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu ▾</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="menu" style="color: #0c0e07;font-weight: bolder;font-size: large;font-family: 'Times New Roman', Times, serif;">Menu ▾</button>
         <div id="menu" class="nav-links">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
