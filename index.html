@@ -434,7 +434,7 @@
     })();
 
     // ——— Mobile nav toggle ———
-    (function(){
+   /* (function(){
       const toggle = document.querySelector('.nav-toggle');
       const nav = document.querySelector('.nav');
       const menu = document.getElementById('menu');
@@ -443,7 +443,54 @@
         toggle.setAttribute('aria-expanded', String(open));
         if (open) menu.querySelector('a')?.focus();
       });
-    })();
+    })();*/
+    // ——— Mobile nav toggle ———
+// ——— Mobile nav toggle ———
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav');
+  const menu = document.getElementById('menu');
+  const themeBtn = document.getElementById('themeToggle');
+
+  const closeMenu = () => {
+    nav.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) menu?.querySelector('a,button')?.focus();
+  });
+
+  // Close after clicking any in-page link
+  menu?.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close after clicking Theme
+  themeBtn?.addEventListener('click', () => {
+    closeMenu();
+   
+  });
+
+  // Also close when any other link/button inside menu is clicked 
+  menu?.addEventListener('click', (e) => {
+    const isControl = e.target.closest('a,button');
+    if (isControl && isControl !== toggle) closeMenu();
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target) && nav.classList.contains('open')) closeMenu();
+  });
+
+  // Close with Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+})();
+
 
     // ——— Typewriter role titles ———
     (function(){
