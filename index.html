@@ -433,61 +433,68 @@
       btn?.addEventListener('click', () => set(document.body.classList.contains('dark') ? 'light' : 'dark'));
     })();
 
-    // ——— Mobile nav toggle ———
-   /* (function(){
-      const toggle = document.querySelector('.nav-toggle');
-      const nav = document.querySelector('.nav');
-      const menu = document.getElementById('menu');
-      toggle?.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
-        if (open) menu.querySelector('a')?.focus();
-      });
-    })();*/
-    // ——— Mobile nav toggle ———
+// ——— Mobile nav toggle ———
 // ——— Mobile nav toggle ———
 (function () {
-  const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
+  const toggle = document.querySelector('.nav-toggle');
   const menu = document.getElementById('menu');
   const themeBtn = document.getElementById('themeToggle');
+
+  const openMenu = () => {
+    nav.classList.add('open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    menu?.querySelector('a,button')?.focus();
+  };
 
   const closeMenu = () => {
     nav.classList.remove('open');
     toggle?.setAttribute('aria-expanded', 'false');
   };
 
+  // Toggle button (Menu ▾)
   toggle?.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(isOpen));
-    if (isOpen) menu?.querySelector('a,button')?.focus();
+    if (nav.classList.contains('open')) closeMenu();
+    else openMenu();
   });
 
-  // Close after clicking any in-page link
-  menu?.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', closeMenu);
+  // Close on any click inside the drawer:
+  // 1) in-page links (#about, #projects, …) -> browser handles smooth scroll
+  // 2) external links (GitHub, Email) -> just close
+  menu?.addEventListener('click', (e) => {
+    const el = e.target.closest('a,button');
+    if (!el) return;
+
+    // If clicking an in-page anchor and it’s the top anchor, also scroll to top
+    const href = el.getAttribute('href') || '';
+    if (href === '#top' || href === '#') {
+      // Smooth scroll to top (in addition to default anchor behavior)
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Close the drawer after any actionable click
+    if (el !== toggle) closeMenu();
   });
 
-  // Close after clicking Theme
+  // Close when clicking Theme (and optionally scroll to top)
   themeBtn?.addEventListener('click', () => {
     closeMenu();
-   
+    // OPTIONAL: also go to top when switching theme:
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Also close when any other link/button inside menu is clicked 
-  menu?.addEventListener('click', (e) => {
-    const isControl = e.target.closest('a,button');
-    if (isControl && isControl !== toggle) closeMenu();
-  });
-
-  // Close when clicking outside
+  // Close when clicking outside the nav
   document.addEventListener('click', (e) => {
-    if (!nav.contains(e.target) && nav.classList.contains('open')) closeMenu();
+    if (!nav.contains(e.target) && nav.classList.contains('open')) {
+      closeMenu();
+    }
   });
 
   // Close with Escape
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
+    if (e.key === 'Escape' && nav.classList.contains('open')) {
+      closeMenu();
+    }
   });
 })();
 
